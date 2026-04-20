@@ -1,1 +1,98 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam ClassBackgroundColor white
+skinparam ClassBorderColor black
 
+package com.javeriana.model {
+    class Artist {
+        - id: UUID
+        - name: String
+        + Artist(id: UUID, name: String)
+        + Artist(name: String)
+        + getId(): UUID
+        + getName(): String
+        + setName(name: String)
+    }
+
+    class Customer {
+        - id: UUID
+        - username: String
+        - password: String
+        - name: String
+        - lastName: String
+        - age: int
+        - followedArtists: List<Artist>
+        - playlists: List<Playlist>
+        + Customer(username: String, password: String, name: String, lastName: String, age: int)
+        + getId(): UUID
+        + getFollowedArtists(): List<Artist>
+        + getPlaylists(): List<Playlist>
+        + setFollowedArtists(followedArtists: List<Artist>)
+        + setPlaylists(playlists: List<Playlist>)
+    }
+
+    class Playlist {
+        - id: UUID
+        - name: String
+        - songs: List<Song>
+        + Playlist(name: String)
+        + getId(): UUID
+        + getSongs(): List<Song>
+        + setSongs(songs: List<Song>)
+    }
+
+    class Song {
+        - id: UUID
+        - name: String
+        - genre: String
+        - durationInSeconds: int
+        - album: String
+        - artists: List<Artist>
+        + Song(name: String, genre: String, durationInSeconds: int, album: String, initialArtist: Artist)
+        + getId(): UUID
+        + getArtists(): List<Artist>
+        + setArtists(artists: List<Artist>)
+    }
+}
+
+package com.javeriana.controller {
+    class AdminController {
+        - artists: List<Artist>
+        - customers: List<Customer>
+        - songs: List<Song>
+        - playlists: List<Playlist>
+        + AdminController()
+        + addArtist(artist: Artist): void
+        + addCustomer(customer: Customer): void
+        + addSong(song: Song): void
+        + addPlaylist(playlist: Playlist): void
+        + showArtists(): void
+        + showCustomers(): void
+        + showSongs(): void
+        + showPlaylists(): void
+        + removeCustomer(customerId: UUID): void
+        + removePlaylist(playlistId: UUID): void
+        + removeSong(songId: UUID): void
+        + removeArtist(artistId: UUID): void
+        + getArtistById(artistId: UUID): Artist
+    }
+}
+
+class Main {
+    + {static} main(args: String[]): void
+}
+
+' Relaciones de Composición/Agregación
+AdminController "1" o-- "*" Artist
+AdminController "1" o-- "*" Customer
+AdminController "1" o-- "*" Song
+AdminController "1" o-- "*" Playlist
+
+Customer "1" --> "*" Artist : follows
+Customer "1" --> "*" Playlist : owns
+Playlist "1" --> "*" Song : contains
+Song "1" --> "1..*" Artist : interpreted by
+
+Main ..> AdminController : uses
+@enduml
