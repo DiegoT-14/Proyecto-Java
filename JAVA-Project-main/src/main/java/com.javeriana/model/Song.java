@@ -1,6 +1,8 @@
 package com.javeriana.model;
 
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Song {
     private UUID id;
@@ -8,14 +10,16 @@ public class Song {
     private String genre;
     private int durationInSeconds;
     private String album;
+    private List<Artist> artists;
 
-
-    public Song (String name,String genre, int durationInSeconds, String album){
+    public Song (String name,String genre, int durationInSeconds, String album, Artist initialArtist){
         this.id= UUID.randomUUID();
         this.name=name;
         this.genre=genre;
         this.durationInSeconds=durationInSeconds;
         this.album=album;
+        this.artists = new ArrayList<>();
+        this.artists.add(initialArtist);
     }
 
     public UUID getId() {
@@ -38,6 +42,10 @@ public class Song {
         return album;
     }
 
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -54,8 +62,14 @@ public class Song {
         this.album = album;
     }
 
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+
     @Override
     public String toString() {
-        return "Id: " + id + " - Name: " + name + " - Genre: " + genre + " - Duration in seconds: " + durationInSeconds + " - Album: " + album;
+        return "Id: " + id + " - Name: " + name + " - Genre: " + genre +
+                " - Duration in seconds: " + durationInSeconds + " - Album: " + album +
+                " - Total Artists: " + artists.size();
     }
 }
