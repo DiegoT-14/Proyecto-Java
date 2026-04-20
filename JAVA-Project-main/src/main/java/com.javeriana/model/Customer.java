@@ -1,6 +1,8 @@
 package com.javeriana.model;
 
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Customer {
     private UUID id;
@@ -9,6 +11,8 @@ public class Customer {
     private String name;
     private String lastName;
     private int age;
+    private List<Artist> followedArtists;
+    private List<Playlist> playlists;
 
     public Customer (String username, String password, String name, String lastName, int age){
         this.id = UUID.randomUUID();
@@ -17,6 +21,8 @@ public class Customer {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
+        this.followedArtists = new ArrayList<>();
+        this.playlists = new ArrayList<>();
     }
 
     public UUID getId() {
@@ -43,6 +49,22 @@ public class Customer {
         return age;
     }
 
+    public List<Artist> getfollowedArtists() {
+        return followedArtists;
+    }
+
+    public List<Playlist> getplaylists() {
+        return playlists;
+    }
+
+    public List<Artist> getFollowedArtists() {
+        return followedArtists;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -61,6 +83,14 @@ public class Customer {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void setFollowedArtists(List<Artist> followedArtists) {
+        this.followedArtists = followedArtists;
+    }
+
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
     }
 
     @Override
