@@ -14,7 +14,7 @@ public class Customer {
     private List<Artist> followedArtists;
     private List<Playlist> playlists;
 
-    public Customer (String username, String password, String name, String lastName, int age){
+    public Customer(String username, String password, String name, String lastName, int age){
         this.id = UUID.randomUUID();
         this.username = username;
         this.password = password;
@@ -25,76 +25,23 @@ public class Customer {
         this.playlists = new ArrayList<>();
     }
 
-    public UUID getId() {
-        return id;
-    }
+    public UUID getId() { return id; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public String getName() { return name; }
+    public String getLastName() { return lastName; }
+    public int getAge() { return age; }
+    public List<Artist> getFollowedArtists() { return followedArtists; }
+    public List<Playlist> getPlaylists() { return playlists; }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public List<Artist> getfollowedArtists() {
-        return followedArtists;
-    }
-
-    public List<Playlist> getplaylists() {
-        return playlists;
-    }
-
-    public List<Artist> getFollowedArtists() {
-        return followedArtists;
-    }
-
-    public List<Playlist> getPlaylists() {
-        return playlists;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setFollowedArtists(List<Artist> followedArtists) {
-        this.followedArtists = followedArtists;
-    }
-
-    public void setPlaylists(List<Playlist> playlists) {
-        this.playlists = playlists;
-    }
+    public void setUsername(String username) { this.username = username; }
+    public void setPassword(String password) { this.password = password; }
+    public void setName(String name) { this.name = name; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setAge(int age) { this.age = age; }
 
     @Override
     public String toString() {
-        return "id: " + id + " - Username: " + username + " - Password: " + password + " - Name: " + name + " - Lastname: " + lastName + " - Age: " + age;
+        return "id: " + id + " - Username: " + username + " - Name: " + name + " " + lastName;
     }
 }
