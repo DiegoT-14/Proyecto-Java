@@ -12,64 +12,30 @@ public class Song {
     private String album;
     private List<Artist> artists;
 
-    public Song (String name,String genre, int durationInSeconds, String album, Artist initialArtist){
-        this.id= UUID.randomUUID();
-        this.name=name;
-        this.genre=genre;
-        this.durationInSeconds=durationInSeconds;
-        this.album=album;
+    public Song(String name, String genre, int durationInSeconds, String album, Artist initialArtist){
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.genre = genre;
+        this.durationInSeconds = durationInSeconds;
+        this.album = album;
         this.artists = new ArrayList<>();
         this.artists.add(initialArtist);
     }
 
-    public UUID getId() {
-        return id;
-    }
+    public UUID getId() { return id; }
+    public String getName() { return name; }
+    public String getGenre() { return genre; }
+    public int getDurationInSeconds() { return durationInSeconds; }
+    public String getAlbum() { return album; }
+    public List<Artist> getArtists() { return artists; }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public int getDurationInSeconds() {
-        return durationInSeconds;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public List<Artist> getArtists() {
-        return artists;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public void setDurationInSeconds(int durationInSeconds) {
-        this.durationInSeconds = durationInSeconds;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public void setArtists(List<Artist> artists) {
-        this.artists = artists;
-    }
+    public void setName(String name) { this.name = name; }
+    public void setGenre(String genre) { this.genre = genre; }
+    public void setDurationInSeconds(int durationInSeconds) { this.durationInSeconds = durationInSeconds; }
+    public void setAlbum(String album) { this.album = album; }
 
     @Override
     public String toString() {
-        return "Id: " + id + " - Name: " + name + " - Genre: " + genre +
-                " - Duration in seconds: " + durationInSeconds + " - Album: " + album +
-                " - Total Artists: " + artists.size();
+        return "Id: " + id + " - Name: " + name + " - Album: " + album + " (" + durationInSeconds + "s)";
     }
 }
