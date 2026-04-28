@@ -15,29 +15,14 @@ public class Playlist {
         this.songs = new ArrayList<>();
     }
 
-    public UUID getId() {
+    public UUID getId() { return id; }
+    public String getName() { return name; }
+    public List<Song> getSongs() { return songs; }
 
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Song> getSongs() {
-        return songs;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
-    }
+    public void setName(String name) { this.name = name; }
 
     @Override
     public String toString() {
-        return "Id: " + id + " - Name: " + name;
+        return "Id: " + id + " - Name: " + name + " (Total songs: " + songs.size() + ")";
     }
 }
