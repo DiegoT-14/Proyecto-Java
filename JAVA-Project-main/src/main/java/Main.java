@@ -16,216 +16,215 @@ public class Main {
 
         boolean exitProgram = false;
 
-        System.out.println("\n---BIENVENIDO---");
+        System.out.println("\n--- BIENVENIDO ---");
 
-        // === BUCLE EXTERNO: MENÚ PRINCIPAL ===
         while (!exitProgram) {
-            System.out.println("\nSeleccione el modulo a utilizar:\n");
-            System.out.println("1. Modulo administrador");
+            System.out.println("\nSeleccione el modulo a utilizar:");
+            System.out.println("\n1. Modulo Administrador");
+            System.out.println("2. Modulo Cliente (Login)");
             System.out.println("0. Salir");
             System.out.print("\nOpcion: ");
 
-            int mainOption = -1;
+            int mainOption = leerEntero(scanner);
 
-            if (scanner.hasNextInt()) {
-                mainOption = scanner.nextInt();
-                scanner.nextLine();
-            } else {
-                System.out.println("Por favor, ingrese un numero valido.");
-                scanner.nextLine();
-                continue;
-            }
-
-            if (mainOption == 0) {
-                exitProgram = true;
-                System.out.println("\n---Cerrando aplicacion. ¡Hasta pronto!---");
-            } else if (mainOption == 1) {
-
-                // === BUCLE INTERNO: MENÚ ADMINISTRADOR ===
-                boolean exitAdmin = false;
-                while (!exitAdmin) {
-                    System.out.println("\n--- MODULO ADMINISTRADOR ---\n");
-                    System.out.println("1. Crear artista y agregarlo a la base de datos.");
-                    System.out.println("2. Eliminar artista de la base de datos.");
-                    System.out.println("3. Crear Cliente y agregarlo a la base de datos.");
-                    System.out.println("4. Eliminar Cliente de la base de datos.");
-                    System.out.println("5. Agregar Playlist a la base de datos.");
-                    System.out.println("6. Eliminar Playlist de la base de datos.");
-                    System.out.println("7. Crear cancion y agregarla a la base de datos.");
-                    System.out.println("8. Eliminar cancion de la base de datos y las playlists en las que exista.");
-                    System.out.println("9. Ver la lista de clientes.");
-                    System.out.println("10. Ver la lista de canciones.");
-                    System.out.println("11. Ver la lista de artistas.");
-                    System.out.println("12. Ver la lista de playlists.");
-                    System.out.println("0. Volver al menu principal.");
-                    System.out.print("\nSeleccione una opcion: ");
-
-                    int adminOption = -1;
-
-                    if (scanner.hasNextInt()) {
-                        adminOption = scanner.nextInt();
-                        scanner.nextLine();
-                    } else {
-                        System.out.println("Por favor, ingrese un número valido.");
-                        scanner.nextLine();
-                        continue;
-                    }
-
-                    switch (adminOption) {
-                        case 1:
-                            System.out.print("\nIngrese el nombre del artista: ");
-                            String artistName = scanner.nextLine();
-                            adminController.addArtist(new Artist(artistName));
-                            System.out.println("¡Artista agregado con exito!");
-                            break;
-
-                        case 2:
-                            System.out.println("\n--- Lista de Artistas ---");
-                            adminController.showArtists();
-                            System.out.print("Ingrese el ID del artista a eliminar: ");
-                            try {
-                                UUID idArtist = UUID.fromString(scanner.nextLine());
-                                adminController.removeArtist(idArtist);
-                            } catch (IllegalArgumentException e) {
-                                System.out.println("Formato de ID invalido.");
-                            }
-                            break;
-
-                        case 3:
-                            System.out.print("\nIngrese username: ");
-                            String username = scanner.nextLine();
-                            System.out.print("Ingrese contraseña: ");
-                            String password = scanner.nextLine();
-                            System.out.print("Ingrese nombre: ");
-                            String name = scanner.nextLine();
-                            System.out.print("Ingrese apellido: ");
-                            String lastName = scanner.nextLine();
-
-                            System.out.print("Ingrese edad: ");
-                            int age = 0;
-                            if (scanner.hasNextInt()) {
-                                age = scanner.nextInt();
-                            }
-                            scanner.nextLine();
-
-                            adminController.addCustomer(new Customer(username, password, name, lastName, age));
-                            System.out.println("¡Cliente agregado con exito!");
-                            break;
-
-                        case 4:
-                            System.out.println("\n--- Lista de Clientes ---");
-                            adminController.showCustomers();
-                            System.out.print("Ingrese el ID del cliente a eliminar: ");
-                            try {
-                                UUID idCustomer = UUID.fromString(scanner.nextLine());
-                                adminController.removeCustomer(idCustomer);
-                            } catch (IllegalArgumentException e) {
-                                System.out.println("Formato de ID invalido.");
-                            }
-                            break;
-
-                        case 5:
-                            System.out.print("\nIngrese el nombre de la Playlist: ");
-                            String playlistName = scanner.nextLine();
-                            adminController.addPlaylist(new Playlist(playlistName));
-                            System.out.println("¡Playlist agregada con exito!");
-                            break;
-
-                        case 6:
-                            System.out.println("\n--- Lista de Playlists ---");
-                            adminController.showPlaylists();
-                            System.out.print("Ingrese el ID de la Playlist a eliminar: ");
-                            try {
-                                UUID idPlaylist = UUID.fromString(scanner.nextLine());
-                                adminController.removePlaylist(idPlaylist);
-                            } catch (IllegalArgumentException e) {
-                                System.out.println("Formato de ID invalido.");
-                            }
-                            break;
-
-                        case 7:
-                            System.out.println("\n--- Creando Canción ---");
-                            System.out.println("Primero, seleccione el artista que la interpreta.");
-                            adminController.showArtists();
-                            System.out.print("Ingrese el ID del artista: ");
-
-                            try {
-                                UUID idArtistForSong = UUID.fromString(scanner.nextLine());
-                                Artist initialArtist = adminController.getArtistById(idArtistForSong);
-
-                                if (initialArtist == null) {
-                                    System.out.println("Error: No se encontro ningun artista con ese ID.");
-                                } else {
-                                    System.out.print("Ingrese el nombre de la cancion: ");
-                                    String songName = scanner.nextLine();
-                                    System.out.print("Ingrese el genero: ");
-                                    String genre = scanner.nextLine();
-
-                                    System.out.print("Ingrese la duracion en segundos: ");
-                                    int duration = 0;
-                                    if (scanner.hasNextInt()) {
-                                        duration = scanner.nextInt();
-                                    }
-                                    scanner.nextLine();
-
-                                    System.out.print("Ingrese el nombre del album: ");
-                                    String album = scanner.nextLine();
-
-                                    adminController.addSong(new Song(songName, genre, duration, album, initialArtist));
-                                    System.out.println("¡Cancion agregada con exito!");
-                                }
-                            } catch (IllegalArgumentException e) {
-                                System.out.println("Formato de ID invalido.");
-                            }
-                            break;
-
-                        case 8:
-                            System.out.println("\n--- Lista de Canciones ---");
-                            adminController.showSongs();
-                            System.out.print("Ingrese el ID de la cancion a eliminar: ");
-                            try {
-                                UUID idSong = UUID.fromString(scanner.nextLine());
-                                adminController.removeSong(idSong);
-                            } catch (IllegalArgumentException e) {
-                                System.out.println("Formato de ID invalido.");
-                            }
-                            break;
-
-                        case 9:
-                            System.out.println("\n--- Lista de Clientes ---");
-                            adminController.showCustomers();
-                            break;
-
-                        case 10:
-                            System.out.println("\n--- Lista de Canciones ---");
-                            adminController.showSongs();
-                            break;
-
-                        case 11:
-                            System.out.println("\n--- Lista de Artistas ---");
-                            adminController.showArtists();
-                            break;
-
-                        case 12:
-                            System.out.println("\n--- Lista de Playlists ---");
-                            adminController.showPlaylists();
-                            break;
-
-                        case 0:
-                            exitAdmin = true;
-                            System.out.println("\nVolviendo al menú principal...");
-                            break;
-
-                        default:
-                            System.out.println("\nOpción no válida. Intente nuevamente.");
-                            break;
-                    }
-                }
-            } else {
-                System.out.println("Opcion no valida. Por favor seleccione 1 o 0.");
+            switch (mainOption) {
+                case 1:
+                    menuAdministrador(adminController, scanner);
+                    break;
+                case 2:
+                    loginCliente(adminController, scanner);
+                    break;
+                case 0:
+                    exitProgram = true;
+                    System.out.println("\nCerrando aplicacion...");
+                    break;
+                default:
+                    System.out.println("Opcion no valida.");
             }
         }
-
         scanner.close();
+    }
+
+    // ==========================================
+    //           SISTEMA DE LOGIN (Punto 9)
+    // ==========================================
+    private static void loginCliente(AdminController adminController, Scanner scanner) {
+        System.out.println("\n--- INICIO DE SESION ---");
+        System.out.print("Username: ");
+        String user = scanner.nextLine();
+        System.out.print("Password: ");
+        String pass = scanner.nextLine();
+
+        Customer loggedCustomer = adminController.login(user, pass);
+
+        if (loggedCustomer != null) {
+            System.out.println("\n¡Login exitoso! Bienvenido, " + loggedCustomer.getName());
+            menuCliente(loggedCustomer, adminController, scanner);
+        } else {
+            System.out.println("\nError: Credenciales incorrectas. No se puede mostrar el menú.");
+        }
+    }
+
+    // ==========================================
+    //           MODULO CLIENTE (Punto 4 Calificación)
+    // ==========================================
+    private static void menuCliente(Customer loggedCustomer, AdminController adminController, Scanner scanner) {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n--- MENU CLIENTE (" + loggedCustomer.getUsername() + ") ---");
+            System.out.println("\n1. Seguir a un artista");
+            System.out.println("2. Dejar de seguir a un artista");
+            System.out.println("3. Crear lista de reproduccion");
+            System.out.println("4. Eliminar lista de reproduccion");
+            System.out.println("5. Agregar cancion a una lista");
+            System.out.println("6. Eliminar cancion de una lista");
+            System.out.println("7. Ver mis listas de reproduccion");
+            System.out.println("8. Ver canciones de una lista");
+            System.out.println("0. Salir (Cerrar Sesion)");
+            System.out.print("\nSeleccione una opcion: ");
+
+            int opt = leerEntero(scanner);
+            try {
+                switch (opt) {
+                    case 1:
+                        adminController.showArtists();
+                        System.out.print("\nID del artista a seguir: ");
+                        adminController.followArtist(loggedCustomer, leerUUID(scanner));
+                        break;
+                    case 2:
+                        adminController.showFollowedArtists(loggedCustomer);
+                        System.out.print("\nID del artista para dejar de seguir: ");
+                        adminController.unfollowArtist(loggedCustomer, leerUUID(scanner));
+                        break;
+                    case 3:
+                        System.out.print("\nNombre de la nueva lista: ");
+                        String pName = scanner.nextLine();
+                        adminController.addPlaylistToCustomer(loggedCustomer, new Playlist(pName));
+                        break;
+                    case 4:
+                        adminController.showCustomerPlaylists(loggedCustomer);
+                        System.out.print("\nID de la lista a eliminar: ");
+                        adminController.removePlaylistFromCustomer(loggedCustomer, leerUUID(scanner));
+                        break;
+                    case 5:
+                        adminController.showCustomerPlaylists(loggedCustomer);
+                        System.out.print("\nID de la lista destino: ");
+                        UUID pIdAdd = leerUUID(scanner);
+                        adminController.showSongs();
+                        System.out.print("\nID de la cancion a agregar: ");
+                        adminController.addSongToPlaylist(loggedCustomer, pIdAdd, leerUUID(scanner));
+                        break;
+                    case 6:
+                        adminController.showCustomerPlaylists(loggedCustomer);
+                        System.out.print("\nID de la lista: ");
+                        UUID pIdRem = leerUUID(scanner);
+                        adminController.showSongsFromCustomerPlaylist(loggedCustomer, pIdRem);
+                        System.out.print("ID de la cancion a remover: ");
+                        adminController.removeSongFromPlaylist(loggedCustomer, pIdRem, leerUUID(scanner));
+                        break;
+                    case 7:
+                        adminController.showCustomerPlaylists(loggedCustomer);
+                        break;
+                    case 8:
+                        adminController.showCustomerPlaylists(loggedCustomer);
+                        System.out.print("\nID de la lista a consultar: ");
+                        adminController.showSongsFromCustomerPlaylist(loggedCustomer, leerUUID(scanner));
+                        break;
+                    case 0:
+                        exit = true;
+                        System.out.println("\nSesion cerrada.");
+                        break;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR: " + e.getMessage());
+            }
+        }
+    }
+
+    // ==========================================
+    //           MODULO ADMINISTRADOR
+    // ==========================================
+    private static void menuAdministrador(AdminController adminController, Scanner scanner) {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n--- MODULO ADMINISTRADOR ---");
+            System.out.println("1. Agregar Artista\n2. Eliminar Artista\n3. Agregar Cliente\n4. Eliminar Cliente\n5. Agregar Cancion\n6. Eliminar Cancion\n7. Ver Todo\n0. Volver");
+            System.out.print("\nSeleccione: ");
+
+            int opt = leerEntero(scanner);
+            try {
+                switch (opt) {
+                    case 1:
+                        System.out.print("\nNombre Artista: ");
+                        adminController.addArtist(new Artist(scanner.nextLine()));
+                        System.out.println("\nArtista creado con exito!.");
+                        break;
+                    case 2:
+                        adminController.showArtists();
+                        System.out.print("\nID a eliminar: ");
+                        adminController.removeArtist(leerUUID(scanner));
+                        break;
+                    case 3:
+                        System.out.print("\nUsername: "); String u = scanner.nextLine();
+                        System.out.print("Password: "); String p = scanner.nextLine();
+                        System.out.print("Nombre: "); String n = scanner.nextLine();
+                        System.out.print("Apellido: "); String a = scanner.nextLine();
+                        System.out.print("Edad: "); int age = leerEntero(scanner);
+                        adminController.addCustomer(new Customer(u, p, n, a, age));
+                        System.out.println("\n Usuario creado con exito!.");
+                        break;
+                    case 4:
+                        adminController.showCustomers();
+                        System.out.print("\nID Cliente: ");
+                        adminController.removeCustomer(leerUUID(scanner));
+                        break;
+                    case 5:
+                        adminController.showArtists();
+                        System.out.print("\nID Artista: ");
+                        Artist art = adminController.getArtistById(leerUUID(scanner));
+                        if(art != null) {
+                            System.out.print("Nombre: "); String sN = scanner.nextLine();
+                            System.out.print("Genero: "); String sG = scanner.nextLine();
+                            System.out.print("Duracion (seg): "); int sD = leerEntero(scanner);
+                            System.out.print("Album: "); String sA = scanner.nextLine();
+                            adminController.addSong(new Song(sN, sG, sD, sA, art));
+                        } else { System.out.println("\nArtista no encontrado."); }
+                        break;
+                    case 6:
+                        adminController.showSongs();
+                        System.out.print("\nID Cancion: ");
+                        adminController.removeSong(leerUUID(scanner));
+                        break;
+                    case 7:
+                        System.out.println("\n--- ESTADO DEL SISTEMA ---");
+                        adminController.showArtists();
+                        adminController.showSongs();
+                        adminController.showCustomers();
+                        break;
+                    case 0: exit = true; break;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR: " + e.getMessage());
+            }
+        }
+    }
+
+    // --- MÉTODOS AUXILIARES DE LECTURA ---
+    private static int leerEntero(Scanner scanner) {
+        try {
+            int val = Integer.parseInt(scanner.nextLine());
+            return val;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    private static UUID leerUUID(Scanner scanner) {
+        try {
+            return UUID.fromString(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Formato de ID invalido.");
+            return null;
+        }
     }
 }
